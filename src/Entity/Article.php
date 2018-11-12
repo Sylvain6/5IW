@@ -2,8 +2,12 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\ArchivedTrait;
+use App\Entity\Traits\PublishedTrait;
+use App\Entity\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,6 +17,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Article
 {
+    use TimestampableTrait;
+    use PublishedTrait;
+    use ArchivedTrait;
+
     /**
 	 * @var integer
      * @ORM\Column(type="integer")
@@ -30,6 +38,7 @@ class Article
 
     /**
 	 * @var string
+     * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(type="string", nullable=true)
      */
 	private $slug = null;
@@ -45,6 +54,7 @@ class Article
      * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="articles", cascade={"persist"})
      */
     private $tags;
+
 
     public function __construct()
     {

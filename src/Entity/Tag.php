@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
@@ -18,10 +19,11 @@ class Tag
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Merci d'indiquer un nom au tag")
      */
     private $name;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
